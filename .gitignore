@@ -42,3 +42,9 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Maven / Java backend artifacts
+target/
+/backend/target/
+*.class
+.mvn/wrapper/maven-wrapper.jar
