@@ -234,9 +234,27 @@
               <input type="text" [(ngModel)]="newItemLocation" placeholder="e.g. Library 2nd Floor study desk">
             </div>
 
-            <div class="form-group">
-              <label>Photo / Image URL</label>
-              <input type="text" [(ngModel)]="newItemImageUrl" placeholder="https://example.com/item.jpg">
+            <div class="form-group full-width photo-upload-box">
+              <label>Item Photo (Upload Image File or Paste Link)</label>
+              <div class="photo-controls">
+                <label class="btn-upload-file">
+                  📷 Choose Photo from Computer
+                  <input type="file" accept="image/*" (change)="onFileSelected($event)" style="display: none;">
+                </label>
+                <span class="photo-divider">or</span>
+                <input type="text" [(ngModel)]="newItemImageUrl" placeholder="Paste image URL (https://...)" class="url-input">
+              </div>
+
+              @if (isCompressingPhoto) {
+                <div class="photo-status">Optimizing photo for fast online database storage...</div>
+              }
+
+              @if (newItemImageUrl) {
+                <div class="photo-preview-card">
+                  <img [src]="newItemImageUrl" class="photo-preview-img" alt="Uploaded Preview">
+                  <button type="button" class="btn-remove-preview" (click)="removePhoto()">✕ Remove Photo</button>
+                </div>
+              }
             </div>
 
             <div class="form-group full-width">
@@ -288,9 +306,27 @@
               <input type="text" [(ngModel)]="newItemLocation" placeholder="e.g. Cafeteria Table 7">
             </div>
 
-            <div class="form-group">
-              <label>Photo / Image URL</label>
-              <input type="text" [(ngModel)]="newItemImageUrl" placeholder="https://example.com/item.jpg">
+            <div class="form-group full-width photo-upload-box">
+              <label>Item Photo (Upload Image File or Paste Link)</label>
+              <div class="photo-controls">
+                <label class="btn-upload-file">
+                  📷 Choose Photo from Computer
+                  <input type="file" accept="image/*" (change)="onFileSelected($event)" style="display: none;">
+                </label>
+                <span class="photo-divider">or</span>
+                <input type="text" [(ngModel)]="newItemImageUrl" placeholder="Paste image URL (https://...)" class="url-input">
+              </div>
+
+              @if (isCompressingPhoto) {
+                <div class="photo-status">Optimizing photo for fast online database storage...</div>
+              }
+
+              @if (newItemImageUrl) {
+                <div class="photo-preview-card">
+                  <img [src]="newItemImageUrl" class="photo-preview-img" alt="Uploaded Preview">
+                  <button type="button" class="btn-remove-preview" (click)="removePhoto()">✕ Remove Photo</button>
+                </div>
+              }
             </div>
 
             <div class="form-group full-width">
