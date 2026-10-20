@@ -1,184 +1,399 @@
-
 <div class="page-container">
   <header class="topbar">
     <a class="brand" href="#" (click)="$event.preventDefault()">
       <span class="brand-icon">⌕</span>
       <span>Find<span class="brand-highlight">It</span></span>
     </a>
-    <span class="topbar-text">Campus Lost &amp; Found Portal</span>
+
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span class="topbar-text">Campus Lost &amp; Found Portal</span>
+      @if (isLoggedIn) {
+        <div class="user-pill">
+          <span>👤 {{ currentUserName }}</span>
+          <button class="logout-btn" (click)="logout()">Sign out</button>
+        </div>
+      }
+    </div>
   </header>
 
-  <main class="main-content">
-    <section class="welcome-section">
-      <div class="welcome-badge">
-        <span class="badge-dot"></span>
-        YOUR CAMPUS, CONNECTED
-      </div>
-
-      <h1>
-        Lost something?<br />
-        <span>Let's find it.</span>
-      </h1>
-
-      <p class="welcome-description">
-        A missing item shouldn't mean a missing day.
-        Sign in to reconnect with the things that matter
-        to you on campus.
-      </p>
-
-      <div class="feature-list">
-        <div class="feature-item">
-          <span class="feature-icon">⌕</span>
-          <div>
-            <strong>Find lost belongings</strong>
-            <p>Browse items reported across campus.</p>
-          </div>
+  <!-- VIEW 1: MEMBER 1 LOGIN / REGISTRATION (When logged out) -->
+  @if (!isLoggedIn) {
+    <main class="main-content">
+      <section class="welcome-section">
+        <div class="welcome-badge">
+          <span class="badge-dot"></span>
+          YOUR CAMPUS, CONNECTED
         </div>
 
-        <div class="feature-item">
-          <span class="feature-icon">↗</span>
-          <div>
-            <strong>Report found items</strong>
-            <p>Help classmates get their things back.</p>
-          </div>
-        </div>
+        <h1>
+          Lost something?<br />
+          <span>Let's find it.</span>
+        </h1>
 
-        <div class="feature-item">
-          <span class="feature-icon">♡</span>
-          <div>
-            <strong>Make someone's day</strong>
-            <p>Small acts can make a big difference.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="login-card">
-      <div class="card-heading">
-        <div class="card-icon">✳</div>
-
-        <h2>
-          {{ isRegisterMode ? 'Create your account' : 'Welcome back!' }}
-        </h2>
-
-        <p>
-          {{
-            isRegisterMode
-              ? 'Join your campus FindIt community.'
-              : 'Sign in to your FindIt account.'
-          }}
+        <p class="welcome-description">
+          A missing item shouldn't mean a missing day.
+          Sign in to reconnect with the things that matter
+          to you on campus.
         </p>
-      </div>
 
-      <form (submit)="onSubmit($event)">
-        @if (isRegisterMode) {
+        <div class="feature-list">
+          <div class="feature-item">
+            <span class="feature-icon">⌕</span>
+            <div>
+              <strong>Find lost belongings</strong>
+              <p>Browse items reported across campus.</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <span class="feature-icon">↗</span>
+            <div>
+              <strong>Report found items</strong>
+              <p>Help classmates get their things back.</p>
+            </div>
+          </div>
+
+          <div class="feature-item">
+            <span class="feature-icon">♡</span>
+            <div>
+              <strong>Make someone's day</strong>
+              <p>Small acts can make a big difference.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="login-card">
+        <div class="card-heading">
+          <div class="card-icon">✳</div>
+
+          <h2>
+            {{ isRegisterMode ? 'Create your account' : 'Welcome back!' }}
+          </h2>
+
+          <p>
+            {{
+              isRegisterMode
+                ? 'Join your campus FindIt community.'
+                : 'Sign in to your FindIt account.'
+            }}
+          </p>
+        </div>
+
+        <form (submit)="onSubmit($event)">
+          @if (isRegisterMode) {
+            <div class="form-group">
+              <label for="name">Full name</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                placeholder="Enter your full name"
+                autocomplete="name"
+                required
+                [(ngModel)]="name"
+              />
+            </div>
+          }
+
           <div class="form-group">
-            <label for="name">Full name</label>
+            <label for="email">College email</label>
             <input
-              id="name"
-              type="text"
-              name="name"
-              placeholder="Enter your full name"
-              autocomplete="name"
+              id="email"
+              type="email"
+              name="email"
+              placeholder="you@college.edu"
+              autocomplete="email"
               required
-              [value]="name"
-              (input)="name = $any($event.target).value"
+              [(ngModel)]="email"
             />
           </div>
-        }
 
-        <div class="form-group">
-          <label for="email">College email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="you@college.edu"
-            autocomplete="email"
-            required
-            [value]="email"
-            (input)="email = $any($event.target).value"
-          />
-        </div>
+          <div class="form-group">
+            <div class="label-row">
+              <label for="password">Password</label>
 
-        <div class="form-group">
-          <div class="label-row">
-            <label for="password">Password</label>
+              @if (!isRegisterMode) {
+                <a href="#" (click)="onForgotPassword($event)">
+                  Forgot password?
+                </a>
+              }
+            </div>
 
-            @if (!isRegisterMode) {
-              <a href="#" (click)="onForgotPassword($event)">
-                Forgot password?
-              </a>
-            }
+            <div class="password-wrapper">
+              <input
+                id="password"
+                [type]="showPassword ? 'text' : 'password'"
+                name="password"
+                placeholder="Enter your password"
+                [autocomplete]="isRegisterMode ? 'new-password' : 'current-password'"
+                required
+                [(ngModel)]="password"
+              />
+
+              <button
+                type="button"
+                class="toggle-password"
+                (click)="togglePassword()"
+                [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              >
+                {{ showPassword ? 'Hide' : 'Show' }}
+              </button>
+            </div>
           </div>
 
-          <div class="password-wrapper">
-            <input
-              id="password"
-              [type]="showPassword ? 'text' : 'password'"
-              name="password"
-              placeholder="Enter your password"
-              [autocomplete]="isRegisterMode ? 'new-password' : 'current-password'"
-              required
-              [value]="password"
-              (input)="password = $any($event.target).value"
-            />
+          <p
+            class="form-message"
+            role="status"
+            aria-live="polite"
+            [style.display]="message ? 'block' : 'none'"
+            [style.color]="message.toLowerCase().includes('fail') || message.toLowerCase().includes('invalid') || message.toLowerCase().includes('exists') ? '#b42318' : '#18794e'"
+          >
+            {{ message }}
+          </p>
 
-            <button
-              type="button"
-              class="toggle-password"
-              (click)="togglePassword()"
-              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
-            >
-              {{ showPassword ? 'Hide' : 'Show' }}
-            </button>
-          </div>
+          <button
+            class="login-button"
+            type="submit"
+            [disabled]="isLoading"
+          >
+            {{
+              isLoading
+                ? 'Please wait...'
+                : isRegisterMode
+                  ? 'Create account'
+                  : 'Sign in'
+            }}
+            <span>→</span>
+          </button>
+        </form>
+
+        <div class="divider">
+          <span>{{ isRegisterMode ? 'ALREADY REGISTERED?' : 'NEW TO FINDIT?' }}</span>
         </div>
-
-        <p
-          class="form-message"
-          role="status"
-          aria-live="polite"
-          [style.display]="message ? 'block' : 'none'"
-          [style.color]="message.toLowerCase().includes('fail') || message.toLowerCase().includes('invalid') || message.toLowerCase().includes('exists') ? '#b42318' : '#18794e'"
-        >
-          {{ message }}
-        </p>
 
         <button
-          class="login-button"
-          type="submit"
+          class="signup-button"
+          type="button"
+          (click)="onCreateAccount()"
           [disabled]="isLoading"
         >
-          {{
-            isLoading
-              ? 'Please wait...'
-              : isRegisterMode
-                ? 'Create account'
-                : 'Sign in'
-          }}
-          <span>→</span>
+          {{ isRegisterMode ? 'Back to sign in' : 'Create an account' }}
         </button>
-      </form>
 
-      <div class="divider">
-        <span>{{ isRegisterMode ? 'ALREADY REGISTERED?' : 'NEW TO FINDIT?' }}</span>
+        <p class="privacy-note">
+          Your campus community starts with a little kindness.
+        </p>
+      </section>
+    </main>
+  }
+
+  <!-- VIEW 2: MEMBER 2 LOST & FOUND PORTAL (When logged in) -->
+  @if (isLoggedIn) {
+    <main class="portal-main">
+      <div class="portal-header">
+        <div>
+          <h2>Campus Lost &amp; Found Feed</h2>
+          <p class="portal-subtitle">Report missing belongings or browse items found by classmates.</p>
+        </div>
+
+        <div class="portal-nav-tabs">
+          <button [class.active]="activeTab === 'FEED'" (click)="activeTab = 'FEED'">📦 All Items ({{ items.length }})</button>
+          <button [class.active]="activeTab === 'REPORT_LOST'" (click)="activeTab = 'REPORT_LOST'">⚠️ Report Lost</button>
+          <button [class.active]="activeTab === 'REPORT_FOUND'" (click)="activeTab = 'REPORT_FOUND'">✅ Report Found</button>
+        </div>
       </div>
 
-      <button
-        class="signup-button"
-        type="button"
-        (click)="onCreateAccount()"
-        [disabled]="isLoading"
-      >
-        {{ isRegisterMode ? 'Back to sign in' : 'Create an account' }}
-      </button>
+      <!-- REPORT LOST FORM -->
+      @if (activeTab === 'REPORT_LOST') {
+        <section class="report-box lost-border">
+          <h3>⚠️ Report a Lost Item</h3>
+          <p class="form-tip">Provide details so anyone who finds your item can easily identify and return it.</p>
 
-      <p class="privacy-note">
-        Your campus community starts with a little kindness.
-      </p>
-    </section>
-  </main>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Item Name / Title *</label>
+              <input type="text" [(ngModel)]="newItemName" placeholder="e.g. Dell XPS 13 Laptop">
+            </div>
+
+            <div class="form-group">
+              <label>Category *</label>
+              <select [(ngModel)]="newItemCategory">
+                <option value="Electronics">Electronics</option>
+                <option value="Bags">Bags / Backpacks</option>
+                <option value="Documents">ID Cards & Documents</option>
+                <option value="Keys">Keys</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Books">Books & Stationery</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Location Last Seen *</label>
+              <input type="text" [(ngModel)]="newItemLocation" placeholder="e.g. Library 2nd Floor study desk">
+            </div>
+
+            <div class="form-group">
+              <label>Photo / Image URL</label>
+              <input type="text" [(ngModel)]="newItemImageUrl" placeholder="https://example.com/item.jpg">
+            </div>
+
+            <div class="form-group full-width">
+              <label>Description / Identifying Marks</label>
+              <textarea rows="2" [(ngModel)]="newItemDescription" placeholder="Color, stickers, case, brand..."></textarea>
+            </div>
+          </div>
+
+          @if (itemFormMessage) {
+            <p class="form-error">{{ itemFormMessage }}</p>
+          }
+
+          <div class="form-actions">
+            <button class="btn-cancel" (click)="activeTab = 'FEED'">Cancel</button>
+            <button class="btn-submit btn-lost" [disabled]="isSubmittingItem" (click)="submitReport('LOST')">
+              {{ isSubmittingItem ? 'Submitting...' : 'Submit Lost Item Report' }}
+            </button>
+          </div>
+        </section>
+      }
+
+      <!-- REPORT FOUND FORM -->
+      @if (activeTab === 'REPORT_FOUND') {
+        <section class="report-box found-border">
+          <h3>✅ Report a Found Item</h3>
+          <p class="form-tip">Thank you for being kind! Report where you found this so the owner can reclaim it.</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Item Name / Title *</label>
+              <input type="text" [(ngModel)]="newItemName" placeholder="e.g. Black Sony Headphones">
+            </div>
+
+            <div class="form-group">
+              <label>Category *</label>
+              <select [(ngModel)]="newItemCategory">
+                <option value="Electronics">Electronics</option>
+                <option value="Bags">Bags / Backpacks</option>
+                <option value="Documents">ID Cards & Documents</option>
+                <option value="Keys">Keys</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Books">Books & Stationery</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Location Where Found *</label>
+              <input type="text" [(ngModel)]="newItemLocation" placeholder="e.g. Cafeteria Table 7">
+            </div>
+
+            <div class="form-group">
+              <label>Photo / Image URL</label>
+              <input type="text" [(ngModel)]="newItemImageUrl" placeholder="https://example.com/item.jpg">
+            </div>
+
+            <div class="form-group full-width">
+              <label>Description</label>
+              <textarea rows="2" [(ngModel)]="newItemDescription" placeholder="Condition, markings, where stored..."></textarea>
+            </div>
+          </div>
+
+          @if (itemFormMessage) {
+            <p class="form-error">{{ itemFormMessage }}</p>
+          }
+
+          <div class="form-actions">
+            <button class="btn-cancel" (click)="activeTab = 'FEED'">Cancel</button>
+            <button class="btn-submit btn-found" [disabled]="isSubmittingItem" (click)="submitReport('FOUND')">
+              {{ isSubmittingItem ? 'Submitting...' : 'Submit Found Item Report' }}
+            </button>
+          </div>
+        </section>
+      }
+
+      <!-- FEED VIEW: SEARCH & FILTERS -->
+      @if (activeTab === 'FEED') {
+        <div class="filter-strip">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              placeholder="Search by name, description, location..."
+              [(ngModel)]="searchQuery"
+              (input)="onSearch()"
+            />
+          </div>
+
+          <div class="type-pill-strip">
+            <button [class.active]="filterType === ''" (click)="setFilterType('')">All</button>
+            <button [class.active]="filterType === 'LOST'" (click)="setFilterType('LOST')">⚠️ Lost</button>
+            <button [class.active]="filterType === 'FOUND'" (click)="setFilterType('FOUND')">✅ Found</button>
+          </div>
+        </div>
+
+        <div class="category-pill-strip">
+          <button [class.active]="filterCategory === ''" (click)="setFilterCategory('')">All Categories</button>
+          <button [class.active]="filterCategory === 'Electronics'" (click)="setFilterCategory('Electronics')">Electronics</button>
+          <button [class.active]="filterCategory === 'Bags'" (click)="setFilterCategory('Bags')">Bags</button>
+          <button [class.active]="filterCategory === 'Documents'" (click)="setFilterCategory('Documents')">Documents</button>
+          <button [class.active]="filterCategory === 'Keys'" (click)="setFilterCategory('Keys')">Keys</button>
+          <button [class.active]="filterCategory === 'Clothing'" (click)="setFilterCategory('Clothing')">Clothing</button>
+        </div>
+
+        <!-- ITEMS GRID -->
+        <div class="items-grid">
+          @if (items.length === 0) {
+            <div class="no-items-card">
+              <span style="font-size: 32px;">📭</span>
+              <h4>No items match your filter</h4>
+              <p>Be the first to report a lost or found item above!</p>
+            </div>
+          }
+
+          @for (item of items; track item.itemId || item.id) {
+            <div class="portal-card">
+              @if (item.imageUrl) {
+                <img [src]="item.imageUrl" class="card-thumb" alt="Item Image" />
+              } @else {
+                <div class="card-thumb-placeholder">
+                  {{ item.type === 'LOST' ? '⚠️' : '✅' }}
+                </div>
+              }
+
+              <div class="card-details">
+                <div class="card-badges">
+                  <span class="badge" [class.badge-lost]="item.type === 'LOST'" [class.badge-found]="item.type === 'FOUND'">
+                    {{ item.type }}
+                  </span>
+                  <span class="badge" [class.badge-returned]="item.status === 'RETURNED'" [class.badge-open]="item.status === 'OPEN'">
+                    {{ item.status }}
+                  </span>
+                </div>
+
+                <h4 class="card-item-name">{{ item.itemName || item.title }}</h4>
+                <p class="card-item-desc">{{ item.description || 'No description provided.' }}</p>
+
+                <div class="card-meta-list">
+                  <div>📍 <strong>Location:</strong> {{ item.location }}</div>
+                  <div>🏷️ <strong>Category:</strong> {{ item.category }}</div>
+                  @if (item.user) {
+                    <div>👤 <strong>Reported by:</strong> {{ item.user.name }}</div>
+                  }
+                </div>
+
+                @if (item.status !== 'RETURNED') {
+                  <button class="btn-mark-returned" (click)="markReturned(item)">
+                    ✓ Mark as Returned
+                  </button>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </main>
+  }
 
   <footer class="page-footer">
     <span>© 2026 FindIt Campus Portal</span>
