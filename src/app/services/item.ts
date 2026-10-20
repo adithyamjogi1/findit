@@ -56,4 +56,12 @@ export class ItemService {
   updateStatus(id: number, status: string): Observable<Item> {
     return this.http.patch<Item>(`${this.apiUrl}/${id}/status`, { status });
   }
+
+  updateItem(id: number, item: Partial<Item>): Observable<Item> {
+    return this.http.put<Item>(`${this.apiUrl}/${id}`, item);
+  }
+
+  deleteItem(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

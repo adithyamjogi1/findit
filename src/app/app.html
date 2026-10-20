@@ -68,118 +68,192 @@
           <div class="card-icon">✳</div>
 
           <h2>
-            {{ isRegisterMode ? 'Create your account' : 'Welcome back!' }}
+            {{ isForgotPasswordMode ? 'Reset your password' : (isRegisterMode ? 'Create your account' : 'Welcome back!') }}
           </h2>
 
           <p>
             {{
-              isRegisterMode
-                ? 'Join your campus FindIt community.'
-                : 'Sign in to your FindIt account.'
+              isForgotPasswordMode
+                ? 'Enter your registered college email and choose a new password.'
+                : (isRegisterMode
+                  ? 'Join your campus FindIt community.'
+                  : 'Sign in to your FindIt account.')
             }}
           </p>
         </div>
 
-        <form (submit)="onSubmit($event)">
-          @if (isRegisterMode) {
+        @if (isForgotPasswordMode) {
+          <form (submit)="$event.preventDefault(); submitPasswordReset()">
             <div class="form-group">
-              <label for="name">Full name</label>
+              <label for="resetEmail">Registered college email</label>
               <input
-                id="name"
-                type="text"
-                name="name"
-                placeholder="Enter your full name"
-                autocomplete="name"
+                id="resetEmail"
+                type="email"
+                name="resetEmail"
+                placeholder="you@college.edu"
+                autocomplete="email"
                 required
-                [(ngModel)]="name"
+                [(ngModel)]="email"
               />
             </div>
-          }
 
-          <div class="form-group">
-            <label for="email">College email</label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="you@college.edu"
-              autocomplete="email"
-              required
-              [(ngModel)]="email"
-            />
-          </div>
+            <div class="form-group">
+              <label for="newPasswordReset">New password</label>
+              <div class="password-wrapper">
+                <input
+                  id="newPasswordReset"
+                  [type]="showPassword ? 'text' : 'password'"
+                  name="newPasswordReset"
+                  placeholder="Enter your new password"
+                  required
+                  [(ngModel)]="newPasswordReset"
+                />
 
-          <div class="form-group">
-            <div class="label-row">
-              <label for="password">Password</label>
-
-              @if (!isRegisterMode) {
-                <a href="#" (click)="onForgotPassword($event)">
-                  Forgot password?
-                </a>
-              }
+                <button
+                  type="button"
+                  class="toggle-password"
+                  (click)="togglePassword()"
+                  [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+                >
+                  {{ showPassword ? 'Hide' : 'Show' }}
+                </button>
+              </div>
             </div>
 
-            <div class="password-wrapper">
-              <input
-                id="password"
-                [type]="showPassword ? 'text' : 'password'"
-                name="password"
-                placeholder="Enter your password"
-                [autocomplete]="isRegisterMode ? 'new-password' : 'current-password'"
-                required
-                [(ngModel)]="password"
-              />
+            <p
+              class="form-message"
+              role="status"
+              aria-live="polite"
+              [style.display]="message ? 'block' : 'none'"
+              [style.color]="message.toLowerCase().includes('fail') || message.toLowerCase().includes('not') || message.toLowerCase().includes('error') || message.toLowerCase().includes('invalid') ? '#b42318' : '#18794e'"
+            >
+              {{ message }}
+            </p>
 
-              <button
-                type="button"
-                class="toggle-password"
-                (click)="togglePassword()"
-                [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
-              >
-                {{ showPassword ? 'Hide' : 'Show' }}
-              </button>
-            </div>
+            <button
+              class="login-button"
+              type="submit"
+              [disabled]="isLoading"
+            >
+              {{ isLoading ? 'Please wait...' : 'Reset Password' }}
+              <span>→</span>
+            </button>
+          </form>
+
+          <div class="divider">
+            <span>REMEMBERED YOUR PASSWORD?</span>
           </div>
-
-          <p
-            class="form-message"
-            role="status"
-            aria-live="polite"
-            [style.display]="message ? 'block' : 'none'"
-            [style.color]="message.toLowerCase().includes('fail') || message.toLowerCase().includes('invalid') || message.toLowerCase().includes('exists') ? '#b42318' : '#18794e'"
-          >
-            {{ message }}
-          </p>
 
           <button
-            class="login-button"
-            type="submit"
+            class="signup-button"
+            type="button"
+            (click)="backToLogin()"
             [disabled]="isLoading"
           >
-            {{
-              isLoading
-                ? 'Please wait...'
-                : isRegisterMode
-                  ? 'Create account'
-                  : 'Sign in'
-            }}
-            <span>→</span>
+            Back to sign in
           </button>
-        </form>
+        } @else {
+          <form (submit)="onSubmit($event)">
+            @if (isRegisterMode) {
+              <div class="form-group">
+                <label for="name">Full name</label>
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                  autocomplete="name"
+                  required
+                  [(ngModel)]="name"
+                />
+              </div>
+            }
 
-        <div class="divider">
-          <span>{{ isRegisterMode ? 'ALREADY REGISTERED?' : 'NEW TO FINDIT?' }}</span>
-        </div>
+            <div class="form-group">
+              <label for="email">College email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="you@college.edu"
+                autocomplete="email"
+                required
+                [(ngModel)]="email"
+              />
+            </div>
 
-        <button
-          class="signup-button"
-          type="button"
-          (click)="onCreateAccount()"
-          [disabled]="isLoading"
-        >
-          {{ isRegisterMode ? 'Back to sign in' : 'Create an account' }}
-        </button>
+            <div class="form-group">
+              <div class="label-row">
+                <label for="password">Password</label>
+
+                @if (!isRegisterMode) {
+                  <a href="#" (click)="onForgotPassword($event)">
+                    Forgot password?
+                  </a>
+                }
+              </div>
+
+              <div class="password-wrapper">
+                <input
+                  id="password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  name="password"
+                  placeholder="Enter your password"
+                  [autocomplete]="isRegisterMode ? 'new-password' : 'current-password'"
+                  required
+                  [(ngModel)]="password"
+                />
+
+                <button
+                  type="button"
+                  class="toggle-password"
+                  (click)="togglePassword()"
+                  [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+                >
+                  {{ showPassword ? 'Hide' : 'Show' }}
+                </button>
+              </div>
+            </div>
+
+            <p
+              class="form-message"
+              role="status"
+              aria-live="polite"
+              [style.display]="message ? 'block' : 'none'"
+              [style.color]="message.toLowerCase().includes('fail') || message.toLowerCase().includes('invalid') || message.toLowerCase().includes('exists') ? '#b42318' : '#18794e'"
+            >
+              {{ message }}
+            </p>
+
+            <button
+              class="login-button"
+              type="submit"
+              [disabled]="isLoading"
+            >
+              {{
+                isLoading
+                  ? 'Please wait...'
+                  : isRegisterMode
+                    ? 'Create account'
+                    : 'Sign in'
+              }}
+              <span>→</span>
+            </button>
+          </form>
+
+          <div class="divider">
+            <span>{{ isRegisterMode ? 'ALREADY REGISTERED?' : 'NEW TO FINDIT?' }}</span>
+          </div>
+
+          <button
+            class="signup-button"
+            type="button"
+            (click)="onCreateAccount()"
+            [disabled]="isLoading"
+          >
+            {{ isRegisterMode ? 'Back to sign in' : 'Create an account' }}
+          </button>
+        }
 
         <p class="privacy-note">
           Your campus community starts with a little kindness.
@@ -418,14 +492,98 @@
                   }
                 </div>
 
-                @if (item.status !== 'RETURNED') {
-                  <button class="btn-mark-returned" (click)="markReturned(item)">
-                    ✓ Mark as Returned
+                <div class="card-action-bar">
+                  @if (item.status !== 'RETURNED') {
+                    <button class="btn-mark-returned" (click)="markReturned(item)">
+                      ✓ Mark Returned
+                    </button>
+                  }
+                  <button class="btn-edit-item" (click)="openEditModal(item)">
+                    ✏️ Edit
                   </button>
-                }
+                  <button class="btn-delete-item" (click)="deleteItem(item)">
+                    🗑️ Delete
+                  </button>
+                </div>
               </div>
             </div>
           }
+        </div>
+      }
+
+      <!-- EDIT ITEM MODAL -->
+      @if (editingItem) {
+        <div class="modal-backdrop" (click)="closeEditModal()">
+          <div class="modal-box" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+              <h3>✏️ Edit Item Details</h3>
+              <button class="modal-close-btn" (click)="closeEditModal()">✕</button>
+            </div>
+
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Item Name / Title *</label>
+                <input type="text" [(ngModel)]="editName" placeholder="e.g. Dell XPS 13 Laptop">
+              </div>
+
+              <div class="form-group">
+                <label>Category *</label>
+                <select [(ngModel)]="editCategory">
+                  <option value="Electronics">Electronics</option>
+                  <option value="Bags">Bags / Backpacks</option>
+                  <option value="Documents">ID Cards & Documents</option>
+                  <option value="Keys">Keys</option>
+                  <option value="Clothing">Clothing</option>
+                  <option value="Books">Books & Stationery</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Location *</label>
+                <input type="text" [(ngModel)]="editLocation" placeholder="e.g. Library 2nd Floor study desk">
+              </div>
+
+              <div class="form-group photo-upload-box">
+                <label>Item Photo (Upload File or Paste Link)</label>
+                <div class="photo-controls">
+                  <label class="btn-upload-file">
+                    📷 Change Photo
+                    <input type="file" accept="image/*" (change)="onEditFileSelected($event)" style="display: none;">
+                  </label>
+                  <span class="photo-divider">or</span>
+                  <input type="text" [(ngModel)]="editImageUrl" placeholder="Paste image URL (https://...)" class="url-input">
+                </div>
+
+                @if (isCompressingEditPhoto) {
+                  <div class="photo-status">Optimizing photo for fast database storage...</div>
+                }
+
+                @if (editImageUrl) {
+                  <div class="photo-preview-card">
+                    <img [src]="editImageUrl" class="photo-preview-img" alt="Item Photo Preview">
+                    <button type="button" class="btn-remove-preview" (click)="removeEditPhoto()">✕ Remove Photo</button>
+                  </div>
+                }
+              </div>
+
+              <div class="form-group">
+                <label>Description</label>
+                <textarea rows="3" [(ngModel)]="editDescription" placeholder="Color, brand, markings..."></textarea>
+              </div>
+
+              @if (editMessage) {
+                <p class="form-error">{{ editMessage }}</p>
+              }
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn-cancel" (click)="closeEditModal()" [disabled]="isSavingEdit">Cancel</button>
+              <button class="btn-save-edit" (click)="saveItemChanges()" [disabled]="isSavingEdit">
+                {{ isSavingEdit ? 'Saving...' : '💾 Save Changes' }}
+              </button>
+            </div>
+          </div>
         </div>
       }
     </main>

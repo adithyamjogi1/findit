@@ -41,4 +41,11 @@ export class UserService {
       data
     );
   }
+
+  resetPassword(email: string, newPassword: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(
+      `${this.apiUrl}/reset-password`,
+      { email, newPassword }
+    );
+  }
 }
