@@ -54,7 +54,10 @@
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+<<<<<<< HEAD
             <scope>runtime</scope>
+=======
+>>>>>>> 8c2f93f8b6ef4135cacfdebdd8e41a51f43f21b9
         </dependency>
 
         <dependency>

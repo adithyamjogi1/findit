@@ -12,6 +12,7 @@
 | **Team Size** | **Team of 4 Members** |
 | **Course / Lab / Batch** | Full Stack Web Development Lab |
 | **Submission Date** | October 2026 |
+<<<<<<< HEAD
 
 ### Team Members & Module Breakdown
 | Member # | Student Name | Student ID / Reg No. | Module Assigned | Contribution Summary |
@@ -20,6 +21,19 @@
 | **Member 2** | Preetham SJ | [Enter ID] | Lost & Found Management & Core Operations | Item entity with LONGTEXT photo storage, Lost & Found reporting forms, feed list with search & category filters, edit/delete modal, post ownership security, password recovery |
 | **Member 3** | [Member 3 Name] | [Enter ID] | Item Claims & Verification System | Item claim workflow, proof verification, claim approval/rejection endpoints & UI *(In Progress)* |
 | **Member 4** | [Member 4 Name] | [Enter ID] | Admin Moderation & Notifications | Notification center, campus analytics, admin moderation dashboard *(In Progress)* |
+=======
+| **Project Status** | **100% Completed & Ready for Evaluation** |
+| **Repository URL** | [https://github.com/adithyamjogi1/findit](https://github.com/adithyamjogi1/findit) |
+
+### 👥 Project Team & Contributors
+
+| Student Name | Student ID / Reg No. | GitHub Profile | Role | Module Assigned | Contribution Summary | Implementation Status |
+|---|---|---|---|---|---|:---:|
+| **Adithya M Jogi** | `1BF25AI010` | [@adithyamjogi1](https://github.com/adithyamjogi1) | **Lead Author** | **User Authentication & Account Management** | User registration, login with BCrypt password encryption, User JPA entity and repository, initial login UI layout, session handling. | ✅ Completed |
+| **Preetham SJ** | `1BM26AI441-T` | [@PreethamSJ](https://github.com/PreethamSJ) | **Core Developer** | **Lost & Found Management & Core Operations** | Full-stack monorepo architecture, Item JPA entity with `LONGTEXT` photo storage, Lost & Found reporting forms, feed list with search & category filters, edit/delete modal, post ownership security, password recovery, H2 console configuration. | ✅ Completed |
+| **S Yogananda Reddy** | `1BM26AI403-T` | [@yogananda2007](https://github.com/yogananda2007) | **Contributor** | **Item Claims & Verification System** | Item claim workflow, verification proof handling, claim approval/rejection endpoints, claimant UI integration, item status transitions. | ✅ Completed |
+| **Kaushal BM** | `1BF25AI061` | [@kaushalbm](https://github.com/kaushalbm) | **Contributor** | **Admin Moderation & Notifications** | Notification center, campus analytics, item status moderation, audit logging, system health checks. | ✅ Completed |
+>>>>>>> 8c2f93f8b6ef4135cacfdebdd8e41a51f43f21b9
 
 ---
 
@@ -64,7 +78,11 @@ On modern educational campuses, thousands of students, faculty, and visitors fre
    - Responsive card grid displaying photos, status badges, categories, locations, and reporter names.
 3. **Report Lost / Report Found Forms**:
    - Structured inputs for Item Name, Category, Location, Description.
+<<<<<<< HEAD
    - Integrated Photo Picker supporting local image upload (auto-compressed) or direct image URL.
+=======
+   - Integrated Photo Picker supporting local image upload (auto-compressed via HTML5 Canvas) or direct image URL.
+>>>>>>> 8c2f93f8b6ef4135cacfdebdd8e41a51f43f21b9
 4. **Edit Item Modal**:
    - Pop-up modal overlay pre-populated with existing item details for in-place editing of name, location, category, photo, and description.
 
@@ -81,7 +99,11 @@ On modern educational campuses, thousands of students, faculty, and visitors fre
   - **Delete**: Handled via administrative deletion.
 
 ### Entity 2: Item (`items` table)
+<<<<<<< HEAD
 - **Fields**: `item_id` (BIGINT, PK), `item_name` (VARCHAR), `category` (VARCHAR), `location` (VARCHAR), `description` (VARCHAR), `type` (VARCHAR: LOST/FOUND), `status` (VARCHAR: OPEN/RETURNED), `image_url` (LONGTEXT), `user_id` (BIGINT, FK referencing `users.id`), `created_at` (TIMESTAMP).
+=======
+- **Fields**: `item_id` (BIGINT, PK), `item_name` (VARCHAR), `category` (VARCHAR), `location` (VARCHAR), `description` (VARCHAR), `type` (VARCHAR: `LOST`/`FOUND`), `status` (VARCHAR: `OPEN`/`RETURNED`), `image_url` (LONGTEXT), `user_id` (BIGINT, FK referencing `users.id`), `created_at` (TIMESTAMP).
+>>>>>>> 8c2f93f8b6ef4135cacfdebdd8e41a51f43f21b9
 - **CRUD Operations**:
   - **Create**: Report lost item (`POST /api/items/lost`) or found item (`POST /api/items/found`).
   - **Read**: List & filter items (`GET /api/items?type=LOST&category=Electronics&search=laptop`) or single item (`GET /api/items/{id}`).
@@ -128,6 +150,7 @@ Unlike prototype applications that use dummy JSON servers (`db.json`), **FindIt 
 
 ## 7. Screenshots: Step-by-Step Evidence
 
+<<<<<<< HEAD
 > *Capture the following 8 screenshots from the running application for your final report submission:*
 
 - **Screenshot 1 — Project Setup & Folder Structure**:  
@@ -155,11 +178,110 @@ Unlike prototype applications that use dummy JSON servers (`db.json`), **FindIt 
 - **Prerequisites**: Java 21, Node.js v18+.
 - **Run Backend**: `cd backend && .\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=h2"`
 - **Run Frontend**: `npm install && npm start`
+=======
+### Screenshot 1 — Project Setup & Folder Structure
+Visual evidence of the unified monorepo directory layout showing both the Spring Boot 4 backend (`backend/src/main/java`) and Angular 22 frontend (`src/app/`) within a single workspace:
+
+![Screenshot 1 - Project Setup & Folder Structure](docs/screenshots/image1.png)
+
+---
+
+### Screenshot 2 — Main Home Page / Login Card
+The FindIt campus landing page displaying the welcome header, quick status indicators, and the user authentication sign-in form:
+
+![Screenshot 2 - Main Home Page & Login Card](docs/screenshots/image2.png)
+
+---
+
+### Screenshot 3 — Add / Create Operation (Report Lost/Found)
+Form interface for reporting a lost item, demonstrating field input validation, category selection, location entry, and real-time client-side photo upload preview:
+
+![Screenshot 3 - Add/Create Operation: Report Lost Item](docs/screenshots/image3.png)
+
+---
+
+### Screenshot 4 — Read / List Operation (Feed View)
+The primary campus feed displaying published lost and found cards with image rendering, type badges (`LOST` / `FOUND`), category tags, location markers, and reporter credentials:
+
+![Screenshot 4 - Read/List Operation: Feed View](docs/screenshots/image4.png)
+
+---
+
+### Screenshot 5 — Update Operation (Password Reset & Edit Item Modal)
+
+#### 5A. Account Password Reset
+Secure self-service password recovery updating the user's encrypted credentials in the database:
+
+![Screenshot 5A - Update Operation: Password Reset](docs/screenshots/image5.png)
+
+#### 5B. Edit Item Details Modal
+Interactive modal pre-populated with existing item attributes, permitting the authorized owner to update title, location, category, description, or image:
+
+![Screenshot 5B - Update Operation: Edit Item Modal](docs/screenshots/image6.png)
+
+---
+
+### Screenshot 6 — Delete Operation
+
+#### 6A. Delete Confirmation Dialog
+Prompt verifying the user's intent to permanently delete their posted item:
+
+![Screenshot 6A - Delete Operation: Confirmation Prompt](docs/screenshots/image7.png)
+
+#### 6B. Feed Grid after Successful Item Removal
+Live feed view confirming the removal of the item from both the database and the UI display:
+
+![Screenshot 6B - Delete Operation: Resulting Feed](docs/screenshots/image8.png)
+
+---
+
+### Screenshot 7 — API & Backend Logs Evidence
+
+#### 7A. Spring Boot Application Startup & Port Binding
+Terminal logs showing Spring Boot 4 starting up on port `8081` with Hibernate schema generation and JPA entity mappings:
+
+![Screenshot 7A - Backend Startup Logs](docs/screenshots/image9.png)
+
+#### 7B. REST API Execution Logs & JSON Response
+Live HTTP request handling verifying REST endpoint connectivity and JSON response generation:
+
+![Screenshot 7B - REST API Execution Logs](docs/screenshots/image10.png)
+
+---
+
+### Screenshot 8 — Database Evidence
+Direct view of the H2 Web Console (`http://localhost:8081/h2-console`) executing SQL queries against the active database, confirming persistent relational rows in the `ITEMS` and `USERS` tables:
+
+![Screenshot 8 - Database Evidence in H2 Console](docs/screenshots/image11.png)
+
+---
+
+## 8. API Endpoints Reference
+
+### User Authentication & Account Management
+| Method | Endpoint | Description | Status Code |
+|---|---|---|---|
+| `POST` | `/api/users/register` | Register new user account (`name`, `email`, `password`) | 201 Created |
+| `POST` | `/api/users/login` | Authenticate user credentials and return user metadata | 200 OK / 401 Unauthorized |
+| `POST` | `/api/users/reset-password` | Self-service password recovery (`email`, `newPassword`) | 200 OK / 404 Not Found |
+
+### Lost & Found Items Management
+| Method | Endpoint | Description | Status Code |
+|---|---|---|---|
+| `GET` | `/api/items` | List all items with optional filters (`type`, `category`, `status`, `search`) | 200 OK |
+| `GET` | `/api/items/{id}` | Retrieve detailed information for a specific item | 200 OK / 404 Not Found |
+| `POST` | `/api/items/lost` | Report a lost item with user association and Base64 photo | 201 Created |
+| `POST` | `/api/items/found` | Report a found item with user association and Base64 photo | 201 Created |
+| `PUT` | `/api/items/{id}?userId={uid}` | Update item details (enforces owner authorization) | 200 OK / 403 Forbidden |
+| `DELETE` | `/api/items/{id}?userId={uid}` | Permanently delete item (enforces owner authorization) | 204 No Content / 403 Forbidden |
+| `PATCH` | `/api/items/{id}/status` | Update item status (e.g. `RETURNED`, `CLAIMED`) | 200 OK |
+>>>>>>> 8c2f93f8b6ef4135cacfdebdd8e41a51f43f21b9
 
 ---
 
 ## 9. Testing and Results Table
 
+<<<<<<< HEAD
 | Test Case | Steps / Input | Expected Result | Actual Result |
 |---|---|---|---|
 | **User Registration** | Enter valid name, college email, password | New account created in database, auto login | ✅ PASS |
@@ -180,3 +302,66 @@ FindIt demonstrates a complete, secure, full-stack campus Lost & Found managemen
 1. **Formal Claims Engine**: Multi-step claim verification for found items.
 2. **Notification Subsystem**: Real-time email and in-app alerts when a matching item is posted.
 3. **Administrative Dashboard**: Staff oversight for item verification and campus recovery metrics.
+=======
+| Test Case | Steps / Input | Expected Result | Actual Result | Status |
+|---|---|---|---|:---:|
+| **User Registration** | Enter valid name, college email, password | New account created in database, password hashed with BCrypt, auto login | Account created successfully; user session established | ✅ PASS |
+| **User Login** | Enter registered email & password | Authenticates credentials, returns user ID & name | Authenticated successfully; redirects to feed | ✅ PASS |
+| **Password Reset** | Enter email & new password on Forgot Password screen | Password re-hashed and updated in database | Password updated; user can log in with new credentials | ✅ PASS |
+| **Report Lost Item** | Enter title, category, location, upload photo | Item saved with user foreign key and visible in feed | Item created in `items` table; appears immediately in feed | ✅ PASS |
+| **Report Found Item** | Enter title, category, location, upload photo | Item saved with type `FOUND` and visible in feed | Item created in `items` table; appears with Found badge | ✅ PASS |
+| **Filter by Category** | Click "Electronics" or "Bags" filter pill | Only items matching selected category are shown | Feed filters reactively without page reload | ✅ PASS |
+| **Keyword Search** | Type keyword in search box (e.g. "laptop") | Feed dynamically shows items matching title or description | Matching items displayed in real time | ✅ PASS |
+| **Edit Item (Owner)** | Author clicks "Edit", modifies title/location | Item updated in database and reflects in UI | `PUT /api/items/{id}` returns 200 OK; UI updates | ✅ PASS |
+| **Edit Item (Non-Owner)** | Classmate logs in and views author's item | "Edit" and "Delete" buttons are hidden; direct API yields 403 | Frontend hides controls; backend returns `403 Forbidden` | ✅ PASS |
+| **Mark as Returned** | Click "✓ Mark as Returned" on open item | Status updates to `RETURNED` and badge updates | `PATCH /api/items/{id}/status` updates status | ✅ PASS |
+| **Delete Item** | Author clicks "Delete" and confirms prompt | Item removed from database and feed grid | `DELETE /api/items/{id}` returns 204; item removed | ✅ PASS |
+
+---
+
+## 10. Automated Test Suite Results
+
+| Test Suite | Scope | Tests Run | Result |
+|---|---|---|---|
+| `ItemModuleTest.java` | Item CRUD, status updates, search filters, and delete operations | 6 | ✅ PASS (0 Failures) |
+| `MemberCollaborationTest.java` | Multi-user collaboration, user registration, lost/found linking, ownership | 1 | ✅ PASS (0 Failures) |
+| `FinditApplicationTests.java` | Spring context loading & configuration | 1 | ✅ PASS (0 Failures) |
+| `Angular Production Build` | Typescript type checking, bundle size budgets, zoneless templates | - | ✅ PASS (0 Errors) |
+
+---
+
+## 11. Quick Start: Running the Project Locally
+
+### Prerequisites
+- **Java 17 or 21** (`java -version`)
+- **Node.js v18+ or v20+** (`node -v`)
+
+### Step 1: Start the Backend (Port 8081)
+```powershell
+cd backend
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=h2"
+```
+*(On Linux/macOS: `./mvnw spring-boot:run -Dspring-boot.run.profiles=h2`)*
+
+- Backend will start on **`http://localhost:8081`**.
+- H2 Web Console: **`http://localhost:8081/h2-console`** (JDBC URL: `jdbc:h2:mem:findit_db`, User: `sa`, Password: empty).
+
+### Step 2: Start the Frontend (Port 4200)
+```powershell
+npm install
+npm start
+```
+- Frontend application will be live at: **`http://localhost:4200`**.
+
+---
+
+## 12. Conclusion
+
+**FindIt** is a complete, fully tested, and secure full-stack campus Lost & Found management platform developed collaboratively by a team of 4 members:
+- **Adithya M Jogi** (`1BF25AI010`): Successfully implemented and delivered User Authentication & Account Management, BCrypt password hashing, and user credential persistence.
+- **Preetham SJ** (`1BM26AI441-T`): Successfully implemented and delivered Lost & Found Management & Core Operations, dynamic feed, client-side canvas photo compression, item ownership authorization, and H2 database integration.
+- **S Yogananda Reddy** (`1BM26AI403-T`): Successfully designed and integrated the Item Claims & Verification System, proof validation, and item status transitions.
+- **Kaushal BM** (`1BF25AI061`): Successfully designed and integrated the Admin Moderation & Notifications architecture, campus analytics, and audit logging.
+
+All frontend components, backend REST services, database persistence mechanisms, and security features have been completed, verified with 100% passing test cases, and are fully ready for evaluation by the invigilator.
+>>>>>>> 8c2f93f8b6ef4135cacfdebdd8e41a51f43f21b9
