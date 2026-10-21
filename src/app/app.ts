@@ -40,6 +40,7 @@ export class App implements OnInit {
   newItemLocation = '';
   newItemDescription = '';
   newItemImageUrl = '';
+  isCompressingPhoto = false;
   itemFormMessage = '';
   isSubmittingItem = false;
 
@@ -166,6 +167,57 @@ export class App implements OnInit {
 
   onSearch(): void {
     this.loadItems();
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) return;
+
+    const file = input.files[0];
+    this.isCompressingPhoto = true;
+    this.cdr.detectChanges();
+
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      const img = new Image();
+      img.onload = () => {
+        // Limit max dimension to 800px for lightweight online database storage
+        const maxDim = 800;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          this.newItemImageUrl = canvas.toDataURL('image/jpeg', 0.8);
+        } else {
+          this.newItemImageUrl = e.target?.result as string;
+        }
+
+        this.isCompressingPhoto = false;
+        this.cdr.detectChanges();
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  removePhoto(): void {
+    this.newItemImageUrl = '';
+    this.cdr.detectChanges();
   }
 
   submitReport(type: 'LOST' | 'FOUND'): void {
