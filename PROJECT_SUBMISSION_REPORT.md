@@ -17,12 +17,12 @@
 
 ### 👥 Project Team & Contributors
 
-| Student Name | Student ID / Reg No. | GitHub Profile | Module Assigned | Contribution Summary | Implementation Status |
-|---|---|---|---|---|:---:|
-| **Preetham SJ** | `1BM26AI441-T` | [@PreethamSJ](https://github.com/PreethamSJ) | **Lost & Found Management & Core Architecture** | Full-stack monorepo architecture, Item JPA entity with `LONGTEXT` photo storage, Lost & Found reporting forms, feed list with search & category filters, edit/delete modal, post ownership security, password recovery, H2 console configuration. | ✅ Completed |
-| **Adithya M Jogi** | `1BF25AI010` | [@adithyamjogi1](https://github.com/adithyamjogi1) | **User Authentication & Account Management** | User registration, login with BCrypt password encryption, User JPA entity and repository, initial login UI layout, session handling. | ✅ Completed |
-| **S Yogananda Reddy** | `1BM26AI403-T` | [@yogananda2007](https://github.com/yogananda2007) | **Item Claims & Verification System** | Item claim workflow, verification proof handling, claim approval/rejection endpoints, claimant UI integration, item status transitions. | ✅ Completed |
-| **Kaushal BM** | `1BF25AI061` | [@kaushalbm](https://github.com/kaushalbm) | **Admin Moderation & Notifications** | Notification center, campus analytics, item status moderation, audit logging, system health checks. | ✅ Completed |
+| Student Name | Student ID / Reg No. | GitHub Profile | Role | Module Assigned | Contribution Summary | Implementation Status |
+|---|---|---|---|---|---|:---:|
+| **Adithya M Jogi** | `1BF25AI010` | [@adithyamjogi1](https://github.com/adithyamjogi1) | **Lead Author** | **User Authentication & Account Management** | User registration, login with BCrypt password encryption, User JPA entity and repository, initial login UI layout, session handling. | ✅ Completed |
+| **Preetham SJ** | `1BM26AI441-T` | [@PreethamSJ](https://github.com/PreethamSJ) | **Core Developer** | **Lost & Found Management & Core Operations** | Full-stack monorepo architecture, Item JPA entity with `LONGTEXT` photo storage, Lost & Found reporting forms, feed list with search & category filters, edit/delete modal, post ownership security, password recovery, H2 console configuration. | ✅ Completed |
+| **S Yogananda Reddy** | `1BM26AI403-T` | [@yogananda2007](https://github.com/yogananda2007) | **Contributor** | **Item Claims & Verification System** | Item claim workflow, verification proof handling, claim approval/rejection endpoints, claimant UI integration, item status transitions. | ✅ Completed |
+| **Kaushal BM** | `1BF25AI061` | [@kaushalbm](https://github.com/kaushalbm) | **Contributor** | **Admin Moderation & Notifications** | Notification center, campus analytics, item status moderation, audit logging, system health checks. | ✅ Completed |
 
 ---
 

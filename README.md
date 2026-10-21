@@ -22,12 +22,12 @@
 
 Developed collaboratively by a team of 4 members:
 
-| Contributor | Student ID | GitHub | Assigned Module & Key Deliverables |
-|---|---|---|---|
-| **Preetham SJ** | `1BM26AI441-T` | [@PreethamSJ](https://github.com/PreethamSJ) | **Lost & Found Core & Monorepo Architecture**<br>• Full-stack unified monorepo setup<br>• Item JPA entity with `LONGTEXT` Base64 photo storage<br>• Real-time campus feed, search & category filtering<br>• Client-side HTML5 Canvas photo compressor<br>• Post ownership security & self-service password reset |
-| **Adithya M Jogi** | `1BF25AI010` | [@adithyamjogi1](https://github.com/adithyamjogi1) | **User Authentication & Account Management**<br>• User registration and BCrypt password encryption<br>• User JPA entity, repository, and controller<br>• Base sign-in UI and session handling |
-| **S Yogananda Reddy** | `1BM26AI403-T` | [@yogananda2007](https://github.com/yogananda2007) | **Item Claims & Verification System**<br>• Claim submission workflow and proof verification logic<br>• Claim status transition handlers (`PENDING`, `APPROVED`, `REJECTED`)<br>• Claimant UI integration and status tracking |
-| **Kaushal BM** | `1BF25AI061` | [@kaushalbm](https://github.com/kaushalbm) | **Admin Moderation & Notifications**<br>• System notification center and moderation criteria<br>• Campus lost-and-found analytics & recovery audit metrics<br>• Item flag and administrative review endpoints |
+| Contributor | Student ID | GitHub | Role | Assigned Module & Key Deliverables |
+|---|---|---|---|---|
+| **Adithya M Jogi** | `1BF25AI010` | [@adithyamjogi1](https://github.com/adithyamjogi1) | **Lead Author** | **User Authentication & Account Management**<br>• User registration and BCrypt password encryption<br>• User JPA entity, repository, and controller<br>• Base sign-in UI and session handling |
+| **Preetham SJ** | `1BM26AI441-T` | [@PreethamSJ](https://github.com/PreethamSJ) | **Core Developer** | **Lost & Found Core & Monorepo Architecture**<br>• Full-stack unified monorepo setup<br>• Item JPA entity with `LONGTEXT` Base64 photo storage<br>• Real-time campus feed, search & category filtering<br>• Client-side HTML5 Canvas photo compressor<br>• Post ownership security & self-service password reset |
+| **S Yogananda Reddy** | `1BM26AI403-T` | [@yogananda2007](https://github.com/yogananda2007) | **Contributor** | **Item Claims & Verification System**<br>• Claim submission workflow and proof verification logic<br>• Claim status transition handlers (`PENDING`, `APPROVED`, `REJECTED`)<br>• Claimant UI integration and status tracking |
+| **Kaushal BM** | `1BF25AI061` | [@kaushalbm](https://github.com/kaushalbm) | **Contributor** | **Admin Moderation & Notifications**<br>• System notification center and moderation criteria<br>• Campus lost-and-found analytics & recovery audit metrics<br>• Item flag and administrative review endpoints |
 
 ---
 
