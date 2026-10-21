@@ -1,17 +1,38 @@
 # FindIt — Campus Lost & Found Portal
-> **A Unified Web Application for Campus Lost & Found Management**  
-> Built as a collaborative project by a **Team of 4 Members** following the *Student Project Submission Guidelines*.
+> **A Unified Full-Stack Web Application for Campus Lost & Found Management**  
+> *Developed for the Full Stack Web Development Lab by a Team of 4 Members following the Student Project Submission Guidelines.*
+
+[![Repository](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/adithyamjogi1/findit)
+[![Spring Boot](https://img.shields.io/badge/Backend-Spring%20Boot%204.1.1-6DB33F?logo=springboot)](https://spring.io/projects/spring-boot)
+[![Angular](https://img.shields.io/badge/Frontend-Angular%2022%20SPA-DD0031?logo=angular)](https://angular.dev/)
+[![Database](https://img.shields.io/badge/Database-H2%20%2F%20MySQL-003B57?logo=mysql)](http://localhost:8081/h2-console)
+[![Build Status](https://img.shields.io/badge/Build-Passing%20(8%20Tests)-brightgreen)](#-automated-testing--results)
+
+---
+
+## 📋 Evaluator / Invigilator Quick Review
+
+> [!IMPORTANT]
+> **For Final Lab Assessment & Invigilation:**  
+> A formal submission report containing the detailed problem statement, entities, ER diagram, architecture, all 11 step-by-step evidence screenshots, and testing pass results is available in:  
+> 👉 **[PROJECT_SUBMISSION_REPORT.md](PROJECT_SUBMISSION_REPORT.md)**
+
+### Quick Verification Links
+- **Step-by-Step Evidence**: [8 Screenshot Verification Evidence](PROJECT_SUBMISSION_REPORT.md#7-screenshots-step-by-step-evidence)
+- **Live Database Console**: Run backend and open `http://localhost:8081/h2-console` (`jdbc:h2:mem:findit_db`)
+- **Automated Test Suite**: 8/8 Tests Passing (`mvn test`)
+- **Interactive API Tester**: Direct browser tool at [`findit-tester.html`](findit-tester.html)
 
 ---
 
 ## 👥 Team Collaboration & Member Modules (Team of 4)
 
-| Member | Name / Role | Assigned Module | Implementation Status | Key Deliverables |
-|---|---|---|---|---|
-| **Member 1** | Adithya | **User Authentication & Profiles** | ✅ Completed | User Registration, BCrypt Login, User JPA Entity, Base Sign-in UI |
-| **Member 2** | Preetham SJ | **Lost & Found Management & Core Operations** | ✅ Completed | Item JPA Entity, Lost/Found Reporting, Feed with Search & Category Filters, Online Photo Upload (Canvas Base64), Edit/Delete Modal, Post Ownership Security, Password Reset |
-| **Member 3** | Next Contributor | **Claim & Verification System** | 🚀 Ready to Implement | Item claim requests, proof verification, claim approval/rejection |
-| **Member 4** | Next Contributor | **Admin Dashboard & Notifications** | 🚀 Ready to Implement | Moderation portal, email/in-app notifications, campus analytics |
+| Member | Student Name | Student ID / Reg No. | Assigned Module | Implementation Status | Key Deliverables |
+|---|---|---|---|---|---|
+| **Member 1** | **Adithya M Jogi** | `1BF25AI010` | **User Authentication & Profiles** | ✅ Completed | User Registration, BCrypt Login, User JPA Entity, Base Sign-in UI |
+| **Member 2** | **Preetham SJ** | `1BM26AI441-T` | **Lost & Found Management & Core Operations** | ✅ Completed | Item JPA Entity, Lost/Found Reporting, Feed with Search & Category Filters, Online Photo Upload (Canvas Base64), Edit/Delete Modal, Post Ownership Security, Password Reset, H2 Console Setup |
+| **Member 3** | **S Yogananda Reddy** | `1BM26AI403-T` | **Claim & Verification System** | 🚀 In Progress | Item claim requests, proof verification, claim approval/rejection endpoints & UI |
+| **Member 4** | **Kaushal BM** | `1BF25AI061` | **Admin Dashboard & Notifications** | 🚀 In Progress | Moderation portal, email/in-app notifications, campus analytics |
 
 ---
 
@@ -26,10 +47,22 @@ On university and college campuses, hundreds of personal items (student IDs, lap
 ### The Solution: FindIt
 **FindIt** provides a centralized, secure, and interactive campus web portal:
 - **Instant Reporting**: Report lost or found items in seconds with title, category, location, and photos.
-- **Online Database Photo Storage**: Direct database storage with client-side image compression—no local files saved on your computer disk.
-- **Search & Category Filters**: Filter by status (Lost / Found), category (Electronics, Bags, Keys, etc.), or keyword search.
+- **Online Database Photo Storage**: Direct database storage with client-side image compression—no local files saved on the host computer disk.
+- **Search & Category Filters**: Filter by status (`LOST` / `FOUND`), category (`Electronics`, `Bags`, `Keys`, etc.), or keyword search.
 - **Post Ownership & Security**: Only the author who uploaded an item can edit or delete it; classmates can browse and mark items as returned.
 - **Self-Service Password Recovery**: Secure password reset for forgotten credentials.
+
+---
+
+## 🖼️ Application Preview
+
+| Main Feed & Search | Report Lost Item Form |
+|:---:|:---:|
+| ![Feed View](docs/screenshots/image4.png) | ![Report Lost](docs/screenshots/image3.png) |
+
+| Edit Item Modal (Owner Only) | Database Console (H2) |
+|:---:|:---:|
+| ![Edit Modal](docs/screenshots/image6.png) | ![Database](docs/screenshots/image11.png) |
 
 ---
 
@@ -44,6 +77,7 @@ findit-frontend/
 │   │   │   ├── UserRepository.java    # Spring Data JPA Repository for users
 │   │   │   ├── UserService.java       # User business logic & BCrypt hashing
 │   │   │   ├── UserController.java    # Auth REST Endpoints (/register, /login, /reset-password)
+│   │   │   ├── FinditApplication.java # Spring Boot entry point & H2 console bean
 │   │   │   ├── entity/Item.java       # Item JPA Entity (table: items, user foreign key)
 │   │   │   ├── repository/ItemRepository.java # Filter & search queries
 │   │   │   ├── service/ItemService.java       # Item CRUD & business rules
@@ -53,7 +87,7 @@ findit-frontend/
 │   │       └── application-h2.properties      # Zero-config local H2 in-memory profile
 │   ├── pom.xml                        # Maven dependencies & build configuration
 │   ├── mvnw / mvnw.cmd                # Maven Wrapper scripts (no Maven install needed)
-│   └── src/test/                      # Integration & unit test suites (ItemModuleTest, MemberCollaborationTest)
+│   └── src/test/                      # Integration & unit test suites (8 passing tests)
 │
 ├── src/                               # Angular 22 Frontend Application
 │   ├── app/
@@ -67,6 +101,8 @@ findit-frontend/
 │   ├── index.html                     # HTML root
 │   └── main.ts                        # Application bootstrap
 │
+├── docs/
+│   └── screenshots/                   # All 11 lab evaluation evidence screenshots
 ├── findit-tester.html                 # Interactive browser-based API testing dashboard
 ├── angular.json                       # Angular CLI configuration
 ├── package.json                       # Node dependencies & npm scripts
@@ -95,7 +131,10 @@ cd backend
 
 - The backend will start on **`http://localhost:8081`**.
 - H2 in-memory database automatically creates tables and sample data.
-- H2 Web Console is available at **`http://localhost:8081/h2-console`** (JDBC URL: `jdbc:h2:mem:findit_db`).
+- **H2 Web Console**: Access at **`http://localhost:8081/h2-console`**
+  - JDBC URL: `jdbc:h2:mem:findit_db`
+  - Username: `sa`
+  - Password: *(leave empty)*
 
 ---
 
@@ -197,8 +236,7 @@ cd backend
 ### Instructions for Member 3 (Claim & Verification Module)
 1. **Pull the repository**:
    ```bash
-   git clone <repo-url>
-   git checkout main
+   git clone https://github.com/adithyamjogi1/findit.git
    git checkout -b feature/claim-verification
    ```
 2. **Backend Extensions**:
@@ -212,7 +250,7 @@ cd backend
 ### Instructions for Member 4 (Admin Dashboard & Notifications)
 1. **Pull the repository**:
    ```bash
-   git checkout main
+   git clone https://github.com/adithyamjogi1/findit.git
    git checkout -b feature/admin-notifications
    ```
 2. **Backend Extensions**:
@@ -225,8 +263,7 @@ cd backend
 
 ---
 
-## 📄 Project Submission Documentation
+## 📄 Formal Lab Submission Report
 
-For the formal college project submission matching the **Student Project Submission Guidelines**, see:
-👉 [PROJECT_SUBMISSION_REPORT.md](file:///d:/zproh/findit-frontend/PROJECT_SUBMISSION_REPORT.md)
-Contains the problem statement, frontend/backend architecture, CRUD operations, ER diagram, screenshot evidence guide, and testing results.
+For the complete, formal laboratory assessment document prepared according to the **Student Project Submission Guidelines**, please refer to:  
+👉 **[PROJECT_SUBMISSION_REPORT.md](PROJECT_SUBMISSION_REPORT.md)**
