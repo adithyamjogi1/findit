@@ -57,11 +57,15 @@ export class ItemService {
     return this.http.patch<Item>(`${this.apiUrl}/${id}/status`, { status });
   }
 
-  updateItem(id: number, item: Partial<Item>): Observable<Item> {
-    return this.http.put<Item>(`${this.apiUrl}/${id}`, item);
+  updateItem(id: number, item: Partial<Item>, userId?: number): Observable<Item> {
+    let params = new HttpParams();
+    if (userId) params = params.set('userId', userId.toString());
+    return this.http.put<Item>(`${this.apiUrl}/${id}`, item, { params });
   }
 
-  deleteItem(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteItem(id: number, userId?: number): Observable<void> {
+    let params = new HttpParams();
+    if (userId) params = params.set('userId', userId.toString());
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, { params });
   }
 }

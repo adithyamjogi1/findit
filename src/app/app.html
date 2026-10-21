@@ -479,6 +479,9 @@
                   <span class="badge" [class.badge-returned]="item.status === 'RETURNED'" [class.badge-open]="item.status === 'OPEN'">
                     {{ item.status }}
                   </span>
+                  @if (isMyItem(item)) {
+                    <span class="badge badge-mine">⭐ My Post</span>
+                  }
                 </div>
 
                 <h4 class="card-item-name">{{ item.itemName || item.title }}</h4>
@@ -488,7 +491,7 @@
                   <div>📍 <strong>Location:</strong> {{ item.location }}</div>
                   <div>🏷️ <strong>Category:</strong> {{ item.category }}</div>
                   @if (item.user) {
-                    <div>👤 <strong>Reported by:</strong> {{ item.user.name }}</div>
+                    <div>👤 <strong>Reported by:</strong> {{ item.user.name || item.user.email }}</div>
                   }
                 </div>
 
@@ -498,12 +501,14 @@
                       ✓ Mark Returned
                     </button>
                   }
-                  <button class="btn-edit-item" (click)="openEditModal(item)">
-                    ✏️ Edit
-                  </button>
-                  <button class="btn-delete-item" (click)="deleteItem(item)">
-                    🗑️ Delete
-                  </button>
+                  @if (isMyItem(item)) {
+                    <button class="btn-edit-item" (click)="openEditModal(item)">
+                      ✏️ Edit
+                    </button>
+                    <button class="btn-delete-item" (click)="deleteItem(item)">
+                      🗑️ Delete
+                    </button>
+                  }
                 </div>
               </div>
             </div>

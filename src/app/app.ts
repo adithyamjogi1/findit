@@ -64,6 +64,16 @@ export class App implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const saved = localStorage.getItem('findit_user');
+    if (saved) {
+      try {
+        const u = JSON.parse(saved);
+        this.currentUserId = u.id || null;
+        this.currentUserName = u.name || '';
+        this.email = u.email || '';
+        this.isLoggedIn = true;
+      } catch (e) {}
+    }
     this.loadItems();
   }
 
@@ -90,6 +100,11 @@ export class App implements OnInit {
           this.currentUserName = response.name || this.name.trim();
           this.currentUserId = response.id || null;
           this.isLoggedIn = true;
+          localStorage.setItem('findit_user', JSON.stringify({
+            id: this.currentUserId,
+            name: this.currentUserName,
+            email: this.email.trim()
+          }));
           this.cdr.detectChanges();
           this.loadItems();
         },
@@ -109,8 +124,14 @@ export class App implements OnInit {
         next: (response) => {
           this.message = response.message || 'Login successful.';
           this.isLoading = false;
-          this.currentUserName = this.email.split('@')[0];
+          this.currentUserId = response.id || null;
+          this.currentUserName = response.name || this.email.split('@')[0];
           this.isLoggedIn = true;
+          localStorage.setItem('findit_user', JSON.stringify({
+            id: this.currentUserId,
+            name: this.currentUserName,
+            email: this.email.trim()
+          }));
           this.cdr.detectChanges();
           this.loadItems();
         },
@@ -126,7 +147,10 @@ export class App implements OnInit {
   }
 
   logout(): void {
+    localStorage.removeItem('findit_user');
     this.isLoggedIn = false;
+    this.currentUserId = null;
+    this.currentUserName = '';
     this.message = '';
     this.password = '';
     this.cdr.detectChanges();
@@ -395,6 +419,17 @@ export class App implements OnInit {
     this.cdr.detectChanges();
   }
 
+  isMyItem(item: Item): boolean {
+    if (!this.isLoggedIn) return false;
+    if (this.currentUserId && item.user?.id) {
+      return item.user.id === this.currentUserId;
+    }
+    if (this.email && item.user?.email) {
+      return item.user.email.toLowerCase() === this.email.trim().toLowerCase();
+    }
+    return false;
+  }
+
   saveItemChanges(): void {
     if (!this.editingItem) return;
     const id = this.editingItem.itemId || this.editingItem.id;
@@ -418,7 +453,7 @@ export class App implements OnInit {
       imageUrl: this.editImageUrl.trim()
     };
 
-    this.itemService.updateItem(id, updatedData).subscribe({
+    this.itemService.updateItem(id, updatedData, this.currentUserId || undefined).subscribe({
       next: (saved) => {
         if (this.editingItem) {
           this.editingItem.itemName = saved.itemName;
@@ -431,9 +466,9 @@ export class App implements OnInit {
         this.closeEditModal();
         this.loadItems();
       },
-      error: () => {
+      error: (err) => {
         this.isSavingEdit = false;
-        this.editMessage = 'Failed to save changes. Check backend connection.';
+        this.editMessage = err.error?.message || 'Failed to save changes. Permission denied or backend offline.';
         this.cdr.detectChanges();
       }
     });
@@ -447,10 +482,13 @@ export class App implements OnInit {
       return;
     }
 
-    this.itemService.deleteItem(id).subscribe({
+    this.itemService.deleteItem(id, this.currentUserId || undefined).subscribe({
       next: () => {
         this.items = this.items.filter(i => (i.itemId || i.id) !== id);
         this.cdr.detectChanges();
+      },
+      error: (err) => {
+        alert(err.error?.message || 'Failed to delete item. You can only delete items you reported.');
       }
     });
   }
