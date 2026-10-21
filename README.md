@@ -21,14 +21,14 @@
 | **Repository URL** | [https://github.com/adithyamjogi1/findit](https://github.com/adithyamjogi1/findit) |
 | **Documentation File** | [PROJECT_SUBMISSION_REPORT.md](PROJECT_SUBMISSION_REPORT.md) |
 
-### Team Members & Module Breakdown
+### 👥 Project Team & Contributors
 
-| Member # | Student Name | Student ID / Reg No. | Module Assigned | Contribution Summary | Status |
+| Student Name | Student ID / Reg No. | GitHub Profile | Module Assigned | Contribution Summary | Status |
 |---|---|---|---|---|:---:|
-| **Member 1** | **Adithya M Jogi** | `1BF25AI010` | User Authentication & Account Management | User registration, login with BCrypt password encryption, User entity and repository, initial login UI layout. | ✅ Completed |
-| **Member 2** | **Preetham SJ** | `1BM26AI441-T` | Lost & Found Management & Core Operations | Item entity with `LONGTEXT` photo storage, Lost & Found reporting forms, feed list with search & category filters, edit/delete modal, post ownership security, password recovery, H2 console configuration. | ✅ Completed |
-| **Member 3** | **S Yogananda Reddy** | `1BM26AI403-T` | Item Claims & Verification System | Item claim workflow, proof verification, claim approval/rejection endpoints, claimant UI integration. | ✅ Completed |
-| **Member 4** | **Kaushal BM** | `1BF25AI061` | Admin Moderation & Notifications | Notification center, campus analytics, item status moderation, audit logging. | ✅ Completed |
+| **Preetham SJ** | `1BM26AI441-T` | [@PreethamSJ](https://github.com/PreethamSJ) | **Lost & Found Management & Core Architecture** | Full-stack monorepo architecture, Item JPA entity with `LONGTEXT` photo storage, Lost & Found reporting forms, feed list with search & category filters, edit/delete modal, post ownership security, password recovery, H2 console configuration. | ✅ Completed |
+| **Adithya M Jogi** | `1BF25AI010` | [@AdithyaJogi](https://github.com/AdithyaJogi) | **User Authentication & Account Management** | User registration, login with BCrypt password encryption, User entity and repository, initial login UI layout, session handling. | ✅ Completed |
+| **S Yogananda Reddy** | `1BM26AI403-T` | Contributor | **Item Claims & Verification System** | Item claim workflow, proof verification, claim approval/rejection endpoints, claimant UI integration, item status transitions. | ✅ Completed |
+| **Kaushal BM** | `1BF25AI061` | Contributor | **Admin Moderation & Notifications** | Notification center, campus analytics, item status moderation, audit logging, system health checks. | ✅ Completed |
 
 ---
 
