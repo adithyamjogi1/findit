@@ -48,3 +48,4 @@ target/
 /backend/target/
 *.class
 .mvn/wrapper/maven-wrapper.jar
+.vs/
